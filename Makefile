@@ -12,6 +12,7 @@ sphinxbase:
 	make -C /sledge/runtime/tests/speechtotext/thirdparty/sphinxbase
 	make -C /sledge/runtime/tests/speechtotext/thirdparty/sphinxbase check
 	make -C /sledge/runtime/tests/speechtotext/thirdparty/sphinxbase install
+	make -C /sledge/runtime/tests/speechtotext/thirdparty/sphinxbase clean
 
 pocketsphinx: sphinxbase
 	cd /sledge/runtime/tests/speechtotext/thirdparty/pocketsphinx && ./autogen.sh
@@ -19,6 +20,7 @@ pocketsphinx: sphinxbase
 	make -C /sledge/runtime/tests/speechtotext/thirdparty/pocketsphinx
 	make -C /sledge/runtime/tests/speechtotext/thirdparty/pocketsphinx check
 	make -C /sledge/runtime/tests/speechtotext/thirdparty/pocketsphinx install
+	make -C /sledge/runtime/tests/speechtotext/thirdparty/sphinxbase clean
 
 clean:
 	@rm -rf tmp
