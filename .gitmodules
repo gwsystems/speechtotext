@@ -1,0 +1,8 @@
+[submodule "thirdparty/pocketsphinx"]
+	path = thirdparty/pocketsphinx
+	url = https://github.com/gwsystems/pocketsphinx.git
+	branch = sledge
+[submodule "thirdparty/sphinxbase"]
+	path = thirdparty/sphinxbase
+	url = https://github.com/gwsystems/sphinxbase.git
+	branch = sledge
