@@ -1,3 +1,5 @@
 .vscode
 hello_ps
 tmp
+*.bc
+hello_ps.wasm
