@@ -1,7 +1,7 @@
-WASM_CC=wasm32-unknown-unknown-wasm-clang
+WASM_CC=${BASE_DIR}/awsm/wasi-sdk/bin/clang
 WASM_OPTFLAGS=-O3 -flto -DWASM
-WASM_LINKER_FLAGS=-Wl,-z,stack-size=524288,--allow-undefined,--no-threads,--stack-first,--no-entry,--export=main,--export=dummy,--export-all
-SFCC=awsm
+WASM_LINKER_FLAGS=-Wl,-z,stack-size=524288,--allow-undefined,--threads=1,--export-all
+AWSM_CC=${BASE_DIR}/awsm/target/release/awsm
 
 PROJECT_ROOT=.
 FE_FOLDER=$(PROJECT_ROOT)/thirdparty/sphinxbase/src/libsphinxbase/fe
@@ -67,19 +67,18 @@ hello_ps.wasm:
 	$(WASM_OPTFLAGS) \
 	-lm \
 	$(WASM_LINKER_FLAGS) \
-	--target=wasm32-unknown-unknown-wasm \
-	-nostartfiles \
+	--target=wasm32-wasi \
 	$(SPHINXBASE_INCLUDE) $(POCKETSPHINX_INCLUDE) \
 	-DHAVE_UNISTD_H -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" \
 	-o hello_ps.wasm \
 	hello_ps.c /sledge/awsm/code_benches/dummy.c $(SPHINXBASE_SRCS) $(POCKETSPHINX_SRCS)
 
 hello_ps.bc: hello_ps.wasm
-	$(SFCC) --inline-constant-globals --runtime-globals hello_ps.wasm -o hello_ps.bc
+	$(AWSM_CC) --inline-constant-globals --runtime-globals hello_ps.wasm -o hello_ps.bc
 	# -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" \
 
 hello_ps_wasm.so: hello_ps.bc
-	$(CC) --shared -fPIC -O3 -flto -DUSE_MEM_VM -I/sledge/runtime//include/ \
+	$(CC) --shared -fPIC -O3 -flto -I/sledge/runtime/include/ \
 	tmp/hello_ps.bc /sledge/runtime//compiletime/instr.c /sledge/runtime//compiletime/memory/64bit_nix.c \
 	-o tmp/hello_ps_wasm.so
 
