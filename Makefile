@@ -1,4 +1,4 @@
-WASM_CC=${BASE_DIR}/awsm/wasi-sdk/bin/clang
+WASMCC=${WASI_SDK_PATH}/bin/clang --sysroot=${WASI_SDK_PATH}/share/wasi-sysroot/
 WASM_OPTFLAGS=-O3 -flto -DWASM
 WASM_LINKER_FLAGS=-Wl,-z,stack-size=524288,--allow-undefined,--threads=1,--export-all
 AWSM_CC=${BASE_DIR}/awsm/target/release/awsm
